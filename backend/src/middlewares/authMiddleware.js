@@ -15,5 +15,13 @@ const authenticateToken = (req, res, next) => {
     res.status(400).json({ message: "Invalid Token" });
   }
 };
+const isAdmin = (req, res, next) => {
+  if (req.user.role !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Access denied. Admin privileges required." });
+  }
+  next();
+};
 
-export default authenticateToken;
+export { authenticateToken, isAdmin };
