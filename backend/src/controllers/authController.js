@@ -41,3 +41,31 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: "Server error during registration" });
   }
 };
+
+export const loginUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, username: user.username, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+    const isAdmin = user.role === "admin";
+
+    res.status(200).json({ token, is_admin: isAdmin, username });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Server error during login" });
+  }
+};
