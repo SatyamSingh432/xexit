@@ -70,3 +70,22 @@ export const submitQuestionnaire = async (req, res) => {
       .json({ message: "Server error during questionnaire submission" });
   }
 };
+
+export const getResignationStatus = async (req, res) => {
+  try {
+    const employeeId = req.user.id;
+
+    const resignation = await Resignation.findOne({ employeeId });
+
+    if (!resignation) {
+      return res.status(200).json({ message: "No resignation record found" });
+    }
+
+    res.status(200).json({
+      resignation_status: resignation.status,
+    });
+  } catch (error) {
+    console.error("Error checking resignation status:", error);
+    res.status(500).json({ message: "Server error while checking status" });
+  }
+};
