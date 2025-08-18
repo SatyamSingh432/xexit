@@ -1,4 +1,5 @@
 import Resignation from "../models/Resignation.js";
+import ResponseModel from "../models/Response.js";
 
 export const submitResignation = async (req, res) => {
   try {
@@ -40,5 +41,32 @@ export const submitResignation = async (req, res) => {
     res
       .status(500)
       .json({ message: "Server error during resignation submission" });
+  }
+};
+
+export const submitQuestionnaire = async (req, res) => {
+  try {
+    const { responses } = req.body;
+    const employeeId = req.user.id;
+    if (!Array.isArray(responses) || responses.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Responses must be a non-empty array" });
+    }
+
+    const responseEntry = new ResponseModel({
+      employeeId: employeeId,
+      responses: responses,
+    });
+
+    await responseEntry.save();
+    res
+      .status(200)
+      .json({ message: "Exit questionnaire submitted successfully" });
+  } catch (error) {
+    console.error("Response submission error:", error);
+    res
+      .status(500)
+      .json({ message: "Server error during questionnaire submission" });
   }
 };
