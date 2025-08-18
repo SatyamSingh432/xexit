@@ -5,6 +5,7 @@ import { authenticateToken, isAdmin } from "../middlewares/authMiddleware.js";
 import {
   getResignations,
   concludeResignation,
+  getExitResponses,
 } from "../controllers/adminController.js";
 
 const router = express.Router();
@@ -16,4 +17,12 @@ router.put(
   isAdmin,
   concludeResignation
 );
+
+router.get(
+  "/admin/exit_responses",
+  authenticateToken,
+  isAdmin,
+  getExitResponses
+);
+
 export default router;

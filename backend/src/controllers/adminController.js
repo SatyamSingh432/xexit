@@ -1,4 +1,5 @@
 import Resignation from "../models/Resignation.js";
+import Response from "../models/Response.js";
 
 export const getResignations = async (req, res) => {
   try {
@@ -44,5 +45,15 @@ export const concludeResignation = async (req, res) => {
     res
       .status(500)
       .json({ message: "Server error while processing resignation" });
+  }
+};
+
+export const getExitResponses = async (req, res) => {
+  try {
+    const responses = await Response.find().select("employeeId responses");
+    res.status(200).json({ data: responses });
+  } catch (error) {
+    console.error("Fetch responses error:", error);
+    res.status(500).json({ message: "Server error while fetching responses" });
   }
 };
