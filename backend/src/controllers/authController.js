@@ -69,3 +69,23 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error during login" });
   }
 };
+
+export const verifyUser = async (req, res) => {
+  const token = req.header("Authorization");
+  if (!token)
+    return res.status(401).json({ valid: false, message: "No token provided" });
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const isAdmin = verified.role === "admin";
+
+    res.json({
+      valid: true,
+      userId: verified.id,
+      is_admin: isAdmin,
+      username: verified.username,
+    });
+  } catch (err) {
+    res.status(401).json({ valid: false, message: "Invalid token" });
+  }
+};
