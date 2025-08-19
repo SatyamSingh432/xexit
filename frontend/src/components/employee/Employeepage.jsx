@@ -73,8 +73,8 @@ const EmployeePage = () => {
     const res = await submitResignation(date, token);
     setResignForm(false);
     console.log(res);
+    setStatus("pending");
   };
-  console.log(resignForm);
   const questionnairesDataHandler = async (e) => {
     e.preventDefault();
     const { ans1, ans2 } = questionnaires;
