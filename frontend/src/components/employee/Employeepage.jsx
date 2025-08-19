@@ -17,6 +17,7 @@ const EmployeePage = () => {
   const [empName, setEmpName] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [resignForm, setResignForm] = useState(true);
+  const [status, setStatus] = useState("pending");
   const [showQues, setShowQues] = useState(false);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -47,6 +48,10 @@ const EmployeePage = () => {
 
   const fetchResignationStatus = async () => {
     const res = await getResignationStatus(token);
+    setStatus(res.resignation_status);
+    console.log(res.resignation_status);
+    if (res.resignation_status === "rejected") return setResignForm(false);
+
     if (res.resignation_status === "pending") return setResignForm(false);
     const isResignationApproved = res.resignation_status === "approved";
     if (isResignationApproved) {
@@ -170,8 +175,12 @@ const EmployeePage = () => {
           </form>
         ) : (
           <div className="status-dis">
-            <div className="status-head">Resignation Status : Pending</div>
-            <p className="status-txt">Wait for HR to approve resignation</p>
+            <div className="status-head">{`Resignation Status : ${status}`}</div>
+            <p className="status-txt">
+              {status === "pending"
+                ? "Wait for HR to approve resignation"
+                : "your application got rejected"}
+            </p>
             <button
               className="wel-nav-btn"
               onClick={() => {
