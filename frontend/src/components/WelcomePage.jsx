@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { loginUser, registerUser } from "../utils/apis";
+import { useNavigate } from "react-router-dom";
 
 import "./WelcomePage.css";
 
@@ -15,6 +16,7 @@ const WelcomePage = () => {
     password: "",
     confirmpassword: "",
   });
+  const navigate = useNavigate();
 
   const handlerEmployeeLogin = async (e) => {
     e.preventDefault();
@@ -23,19 +25,45 @@ const WelcomePage = () => {
 
     const loggedInUser = await loginUser(username, password);
     console.log(loggedInUser);
+    if (!loggedInUser.username) {
+      alert("wrong username or password");
+      setUser({
+        username: "",
+        password: "",
+      });
+      return;
+    }
+    if (loggedInUser.is_admin) {
+      navigate("/admin");
+    } else {
+      navigate("/employee");
+    }
+    setUser({
+      username: "",
+      password: "",
+    });
   };
 
   const handlerEmployeeRegister = async (e) => {
     e.preventDefault();
 
-    console.log(userRegister);
     const { username, password, confirmpassword } = userRegister;
     if (password !== confirmpassword) {
+      alert("password and confirmpassword are not same");
       return;
     }
 
     const registeredUser = await registerUser(username, password);
-    console.log(registeredUser);
+    if (registeredUser.is_admin) {
+      navigate("/admin");
+    } else {
+      navigate("/employee");
+    }
+    setUserRegister({
+      username: "",
+      password: "",
+      confirmpassword: "",
+    });
   };
 
   const changeLoginHandler = (e) => {
