@@ -1,0 +1,56 @@
+.admin-resign-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.admin-resign-list {
+  margin-top: 20px;
+  width: 80%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.admin-resign-header {
+  background-color: rgba(0, 0, 0, 0.475);
+  color: white;
+  text-align: left;
+}
+
+.admin-resign-header-row th {
+  padding: 16px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.admin-resign-body {
+  background-color: white;
+}
+
+.admin-resign-body-row {
+  border: 0 10px;
+}
+
+.admin-resign-body-row td {
+  padding: 16px;
+  border-bottom: 1px solid #dddddd48;
+  font-size: 18px;
+}
+
+.admin-resign-body-row button {
+  padding: 6px 12px;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid rgb(0, 0, 0);
+  cursor: pointer;
+  font-size: 14px;
+  color: #ffffff;
+  border-radius: 4px;
+}

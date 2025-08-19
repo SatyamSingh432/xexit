@@ -61,3 +61,33 @@ export const verifyToken = async (token) => {
   });
   return res.json();
 };
+
+export const getResignations = async (token) => {
+  const res = await fetch(`${API_URL}/api/admin/resignations`, {
+    method: "GET",
+    headers: { Authorization: token },
+  });
+  return res.json();
+};
+
+export const concludeResignation = async (
+  resignationId,
+  approved,
+  lwd,
+  token
+) => {
+  const res = await fetch(`${API_URL}/api/admin/conclude_resignation`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", Authorization: token },
+    body: JSON.stringify({ resignationId, approved, lwd }),
+  });
+  return res.json();
+};
+
+export const getQuestionnaire = async (token) => {
+  const res = await fetch(`${API_URL}/api/admin/exit_responses`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", Authorization: token },
+  });
+  return res.json();
+};
