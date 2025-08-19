@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:3001";
-
+// const API_URL = "http://localhost:3001";
+const API_URL = "https://xexit-pmb4.onrender.com";
 export const loginUser = async (username, password) => {
   const res = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
