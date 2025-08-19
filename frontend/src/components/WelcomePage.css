@@ -12,6 +12,11 @@
   border-radius: 5px;
 }
 
+.wel-nav-btn-active {
+  background-color: black;
+  color: #ffffff;
+}
+
 .wel-form-container {
   display: flex;
   justify-content: center;

@@ -54,3 +54,58 @@
   color: #ffffff;
   border-radius: 4px;
 }
+
+/* src/pages/Responses.css */
+.responses-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+}
+
+.response-card {
+  border: 2px solid #000;
+  padding: 16px;
+  max-width: 400px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.response-card:hover {
+  transform: scale(1.02);
+}
+
+.employee-id {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  padding-bottom: 5px;
+}
+
+.responses-list {
+  margin-top: 10px;
+}
+
+.response-item {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  /* border-bottom: 1px dashed #000; */
+}
+
+.response-item:last-child {
+  border-bottom: none;
+}
+
+.question {
+  font-weight: bold;
+}
+
+.answer {
+  margin-top: 4px;
+  color: #333;
+}

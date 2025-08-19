@@ -85,8 +85,9 @@ export const concludeResignation = async (
 };
 
 export const getQuestionnaire = async (token) => {
+  console.log(token);
   const res = await fetch(`${API_URL}/api/admin/exit_responses`, {
-    method: "PUT",
+    method: "GET",
     headers: { "Content-Type": "application/json", Authorization: token },
   });
   return res.json();
