@@ -1,0 +1,70 @@
+.em-resign-container {
+  height: 100vh;
+  width: 100vw;
+}
+.em-resign-nav {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding: 2rem 4rem;
+  gap: 1rem;
+}
+
+.em-resign-nav-opt {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.em-resign-form-container {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  padding: 3rem 6rem;
+}
+
+.em-resign-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50%;
+}
+
+.em-resign-label {
+  font-size: 20px;
+}
+
+.em-resign-input {
+  padding: 5px 20px;
+  font-size: 20px;
+  width: 50%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.723);
+}
+
+.em-resign-textarea {
+  padding: 10px 20px;
+  font-size: 16px;
+  height: 10rem;
+  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.723);
+  resize: none;
+}
+
+.em-resign-submit {
+  padding: 10px 20px;
+  font-size: 20px;
+  width: 50%;
+  margin-top: 20px;
+  background-color: black;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.side-details {
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(128, 128, 128, 0.781);
+  padding-top: 10px;
+}

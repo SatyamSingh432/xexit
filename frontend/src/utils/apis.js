@@ -27,3 +27,37 @@ export const registerUser = async (username, password) => {
   }
   return { error: true };
 };
+
+export const submitResignation = async (lwd, token) => {
+  const res = await fetch(`${API_URL}/api/user/resign`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: token },
+    body: JSON.stringify({ lwd }),
+  });
+  return res.json();
+};
+
+export const getResignationStatus = async (token) => {
+  const res = await fetch(`${API_URL}/api/user/resignation_status`, {
+    method: "GET",
+    headers: { Authorization: token },
+  });
+  return res.json();
+};
+
+export const submitQuestionnaire = async (responses, token) => {
+  const res = await fetch(`${API_URL}/api/user/responses`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: token },
+    body: JSON.stringify({ responses }),
+  });
+  return res.json();
+};
+
+export const verifyToken = async (token) => {
+  const res = await fetch(`${API_URL}/api/auth/verify`, {
+    method: "GET",
+    headers: { Authorization: token },
+  });
+  return res.json();
+};
