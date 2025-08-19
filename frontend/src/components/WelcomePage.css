@@ -1,0 +1,65 @@
+.wel-main-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.wel-nav-btn {
+  font-size: 18px;
+  padding: 7px 15px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 2px solid rgba(128, 128, 128, 0.734);
+  border-radius: 5px;
+}
+
+.wel-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.form-title {
+  font-size: 30px;
+  padding-bottom: 2rem;
+  font-weight: bold;
+}
+
+.admin-login-form {
+  border: 2px solid rgba(128, 128, 128, 0.449);
+  padding: 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  border-radius: 10px;
+}
+
+.form-label {
+  font-size: 20px;
+  padding-bottom: 5px;
+}
+
+.form-input {
+  padding: 10px 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.723);
+}
+
+.form-submit-btn {
+  background-color: rgb(34, 34, 34);
+  color: #ffffff;
+  border: 2px solid black;
+}
+
+.form-employee-text {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.form-employee-text-span {
+  color: blue;
+  padding-left: 0.5rem;
+  cursor: pointer;
+}
