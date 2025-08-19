@@ -99,12 +99,24 @@ const EmployeePage = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   return (
     <div className="em-resign-container">
       <nav className="em-resign-nav">
         <p className="em-resign-nav-opt">User Name : </p>
         <p className="em-resign-nav-opt">{empName}</p>
+        <button
+          className="wel-nav-btn"
+          style={{ backgroundColor: "black", color: "white" }}
+          onClick={() => {
+            logoutHandler();
+          }}
+        >
+          log out
+        </button>
       </nav>
       <main className="em-resign-form-container">
         {resignForm ? (
@@ -157,11 +169,18 @@ const EmployeePage = () => {
             </button>
           </form>
         ) : (
-          <>
-            <div>Resignation Status : Pending</div>
-            <br />
-            <p>Wait for HR to approve resignation</p>
-          </>
+          <div className="status-dis">
+            <div className="status-head">Resignation Status : Pending</div>
+            <p className="status-txt">Wait for HR to approve resignation</p>
+            <button
+              className="wel-nav-btn"
+              onClick={() => {
+                fetchResignationStatus();
+              }}
+            >
+              check status
+            </button>
+          </div>
         )}
       </main>
     </div>
