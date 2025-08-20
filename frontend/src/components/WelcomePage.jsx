@@ -6,6 +6,7 @@ import "./WelcomePage.css";
 
 const WelcomePage = () => {
   const [newEmployee, setNewEmployee] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [user, setUser] = useState({
     username: "",
@@ -20,11 +21,11 @@ const WelcomePage = () => {
 
   const handlerEmployeeLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const { username, password } = user;
 
     const loggedInUser = await loginUser(username, password);
-    console.log(loggedInUser);
     if (!loggedInUser.username) {
       alert("wrong username or password");
       setUser({
@@ -33,6 +34,7 @@ const WelcomePage = () => {
       });
       return;
     }
+    setIsLoading(false);
     if (loggedInUser.is_admin) {
       navigate("/admin");
     } else {
@@ -46,7 +48,7 @@ const WelcomePage = () => {
 
   const handlerEmployeeRegister = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const { username, password, confirmpassword } = userRegister;
     if (password !== confirmpassword) {
       alert("password and confirmpassword are not same");
@@ -54,6 +56,7 @@ const WelcomePage = () => {
     }
 
     const registeredUser = await registerUser(username, password);
+    setIsLoading(false);
     if (registeredUser.is_admin) {
       navigate("/admin");
     } else {
@@ -82,107 +85,113 @@ const WelcomePage = () => {
 
   return (
     <>
-      <div className="wel-main-container">
-        <main className="wel-form-container">
-          {newEmployee ? (
-            <>
-              <h2 className="form-title">Login</h2>
-              <form
-                onSubmit={handlerEmployeeLogin}
-                className="admin-login-form"
-              >
-                <label className="form-label">User Name :</label>
-                <input
-                  type="text"
-                  name="username"
-                  required
-                  value={user.username}
-                  placeholder="user name"
-                  onChange={changeLoginHandler}
-                  className="form-input"
-                />
-                <label className="form-label">Password :</label>
-                <input
-                  type="password"
-                  name="password"
-                  required
-                  placeholder="password"
-                  value={user.password}
-                  onChange={changeLoginHandler}
-                  className="form-input"
-                />
-                <button className="wel-nav-btn form-submit-btn" type="submit">
-                  Submit
-                </button>
-                <p className="form-employee-text">
-                  New Register?
-                  <span
-                    className="form-employee-text-span"
-                    onClick={() => {
-                      setNewEmployee(false);
-                    }}
-                  >
-                    Register
-                  </span>
-                </p>
-              </form>
-            </>
-          ) : (
-            <>
-              <h2 className="form-title">Register</h2>
-              <form
-                onSubmit={handlerEmployeeRegister}
-                className="admin-login-form"
-              >
-                <label className="form-label">User Name :</label>
-                <input
-                  type="text"
-                  name="username"
-                  required
-                  onChange={registerHandler}
-                  value={userRegister.username}
-                  placeholder="user name"
-                  className="form-input"
-                />
-                <label className="form-label">Password :</label>
-                <input
-                  type="password"
-                  name="password"
-                  required
-                  value={userRegister.password}
-                  onChange={registerHandler}
-                  placeholder="password"
-                  className="form-input"
-                />
-                <label className="form-label">Confirm Password :</label>
-                <input
-                  type="password"
-                  name="confirmpassword"
-                  required
-                  value={userRegister.confirmpassword}
-                  onChange={registerHandler}
-                  placeholder="confirm password"
-                  className="form-input"
-                />
-                <button className="wel-nav-btn form-submit-btn" type="submit">
-                  Submit
-                </button>
-                <p className="form-employee-text">
-                  Already register?
-                  <span
-                    className="form-employee-text-span"
-                    onClick={() => {
-                      setNewEmployee(true);
-                    }}
-                  >
-                    Login
-                  </span>
-                </p>
-              </form>
-            </>
-          )}
-        </main>
-      </div>
+      {isLoading ? (
+        <div className="loader-display">
+          <span className="loader"></span>
+        </div>
+      ) : (
+        <div className="wel-main-container">
+          <main className="wel-form-container">
+            {newEmployee ? (
+              <>
+                <h2 className="form-title">Login</h2>
+                <form
+                  onSubmit={handlerEmployeeLogin}
+                  className="admin-login-form"
+                >
+                  <label className="form-label">User Name :</label>
+                  <input
+                    type="text"
+                    name="username"
+                    required
+                    value={user.username}
+                    placeholder="user name"
+                    onChange={changeLoginHandler}
+                    className="form-input"
+                  />
+                  <label className="form-label">Password :</label>
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    placeholder="password"
+                    value={user.password}
+                    onChange={changeLoginHandler}
+                    className="form-input"
+                  />
+                  <button className="wel-nav-btn form-submit-btn" type="submit">
+                    Submit
+                  </button>
+                  <p className="form-employee-text">
+                    New Register?
+                    <span
+                      className="form-employee-text-span"
+                      onClick={() => {
+                        setNewEmployee(false);
+                      }}
+                    >
+                      Register
+                    </span>
+                  </p>
+                </form>
+              </>
+            ) : (
+              <>
+                <h2 className="form-title">Register</h2>
+                <form
+                  onSubmit={handlerEmployeeRegister}
+                  className="admin-login-form"
+                >
+                  <label className="form-label">User Name :</label>
+                  <input
+                    type="text"
+                    name="username"
+                    required
+                    onChange={registerHandler}
+                    value={userRegister.username}
+                    placeholder="user name"
+                    className="form-input"
+                  />
+                  <label className="form-label">Password :</label>
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    value={userRegister.password}
+                    onChange={registerHandler}
+                    placeholder="password"
+                    className="form-input"
+                  />
+                  <label className="form-label">Confirm Password :</label>
+                  <input
+                    type="password"
+                    name="confirmpassword"
+                    required
+                    value={userRegister.confirmpassword}
+                    onChange={registerHandler}
+                    placeholder="confirm password"
+                    className="form-input"
+                  />
+                  <button className="wel-nav-btn form-submit-btn" type="submit">
+                    Submit
+                  </button>
+                  <p className="form-employee-text">
+                    Already register?
+                    <span
+                      className="form-employee-text-span"
+                      onClick={() => {
+                        setNewEmployee(true);
+                      }}
+                    >
+                      Login
+                    </span>
+                  </p>
+                </form>
+              </>
+            )}
+          </main>
+        </div>
+      )}
     </>
   );
 };

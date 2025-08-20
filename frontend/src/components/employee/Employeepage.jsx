@@ -19,6 +19,8 @@ const EmployeePage = () => {
   const [resignForm, setResignForm] = useState(true);
   const [status, setStatus] = useState("pending");
   const [showQues, setShowQues] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -47,9 +49,11 @@ const EmployeePage = () => {
   });
 
   const fetchResignationStatus = async () => {
+    setIsLoading(true);
     const res = await getResignationStatus(token);
     setStatus(res.resignation_status);
-    console.log(res.resignation_status);
+    setIsLoading(false);
+
     if (res.resignation_status === "rejected") return setResignForm(false);
 
     if (res.resignation_status === "pending") return setResignForm(false);
@@ -66,17 +70,19 @@ const EmployeePage = () => {
 
   const resignDataHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const { date } = resignData;
     setResignData({
       date: "",
     });
-    const res = await submitResignation(date, token);
+    await submitResignation(date, token);
     setResignForm(false);
-    console.log(res);
+    setIsLoading(false);
     setStatus("pending");
   };
   const questionnairesDataHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const { ans1, ans2 } = questionnaires;
     setQuestionnaires({
       ans1: "",
@@ -89,6 +95,7 @@ const EmployeePage = () => {
     ];
     await submitQuestionnaire(responses, token);
     alert("questionnaire form submitted");
+    setIsLoading(false);
   };
 
   const resignDataChange = (e) => {
@@ -123,75 +130,84 @@ const EmployeePage = () => {
           log out
         </button>
       </nav>
-      <main className="em-resign-form-container">
-        {resignForm ? (
-          <form className="em-resign-form" onSubmit={resignDataHandler}>
-            <h2>Resign Form</h2>
+      {isLoading ? (
+        <div className="loader-display">
+          <span className="loader"></span>
+        </div>
+      ) : (
+        <main className="em-resign-form-container">
+          {resignForm ? (
+            <form className="em-resign-form" onSubmit={resignDataHandler}>
+              <h2>Resign Form</h2>
 
-            <label className="em-resign-label">Last Working Day</label>
-            <input
-              className="em-resign-input"
-              type="date"
-              name="date"
-              id=""
-              value={resignData.date}
-              required
-              onChange={resignDataChange}
-            />
+              <label className="em-resign-label">Last Working Day</label>
+              <input
+                className="em-resign-input"
+                type="date"
+                name="date"
+                id=""
+                value={resignData.date}
+                required
+                onChange={resignDataChange}
+              />
 
-            <button className="em-resign-submit" type="submit">
-              Submit
-            </button>
-            <p className="side-details">
-              When Approved Questioner Form will Open, wait for some time.
-            </p>
-          </form>
-        ) : showQues ? (
-          <form className="em-resign-form" onSubmit={questionnairesDataHandler}>
-            <h2>Resign Accepted Fill Questionnaire Form</h2>
-            <label className="em-resign-label">{QuesOne}</label>
-            <textarea
-              className="em-resign-textarea"
-              name="ans1"
-              required
-              id=""
-              value={questionnaires.ans1}
-              placeholder="Enter here..."
-              onChange={questionnairesDataChange}
-            />
-            <label className="em-resign-label">{QuesTwo}</label>
-            <textarea
-              className="em-resign-textarea"
-              name="ans2"
-              required
-              id=""
-              value={questionnaires.ans2}
-              onChange={questionnairesDataChange}
-              placeholder="Enter here..."
-            />
-            <button className="em-resign-submit" type="submit">
-              Submit
-            </button>
-          </form>
-        ) : (
-          <div className="status-dis">
-            <div className="status-head">{`Resignation Status : ${status}`}</div>
-            <p className="status-txt">
-              {status === "pending"
-                ? "Wait for HR to approve resignation"
-                : "your application got rejected"}
-            </p>
-            <button
-              className="wel-nav-btn"
-              onClick={() => {
-                fetchResignationStatus();
-              }}
+              <button className="em-resign-submit" type="submit">
+                Submit
+              </button>
+              <p className="side-details">
+                When Approved Questioner Form will Open, wait for some time.
+              </p>
+            </form>
+          ) : showQues ? (
+            <form
+              className="em-resign-form"
+              onSubmit={questionnairesDataHandler}
             >
-              check status
-            </button>
-          </div>
-        )}
-      </main>
+              <h2>Resign Accepted Fill Questionnaire Form</h2>
+              <label className="em-resign-label">{QuesOne}</label>
+              <textarea
+                className="em-resign-textarea"
+                name="ans1"
+                required
+                id=""
+                value={questionnaires.ans1}
+                placeholder="Enter here..."
+                onChange={questionnairesDataChange}
+              />
+              <label className="em-resign-label">{QuesTwo}</label>
+              <textarea
+                className="em-resign-textarea"
+                name="ans2"
+                required
+                id=""
+                value={questionnaires.ans2}
+                onChange={questionnairesDataChange}
+                placeholder="Enter here..."
+              />
+              <button className="em-resign-submit" type="submit">
+                Submit
+              </button>
+            </form>
+          ) : (
+            <div className="status-dis">
+              <div className="status-head">{`Resignation Status : ${status}`}</div>
+              <p className="status-txt">
+                {status === "pending"
+                  ? "Wait for HR to approve resignation"
+                  : "your application got rejected"}
+              </p>
+              <button
+                className="wel-nav-btn"
+                onClick={() => {
+                  fetchResignationStatus();
+                }}
+              >
+                check status
+              </button>
+            </div>
+          )}
+        </main>
+      )}
     </div>
   );
 };
